@@ -147,9 +147,9 @@ const App: React.FC = () => {
             <div className="container mx-auto px-4">
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-12 justify-items-center max-w-4xl mx-auto">
                     {[
-                        { label: '見積作成時間', value: '50', unit: '%短縮', icon: <Zap size={20}/> },
-                        { label: '手戻り削減率', value: '40', unit: '%減', icon: <ChevronRight size={20} className="rotate-90"/> },
-                        { label: '見積精度', value: '+80', unit: '%向上', icon: <Zap size={20}/> },
+                        { label: '見積作成時間', value: '90', unit: '%短縮', icon: <Zap size={20}/> },
+                        { label: '手戻り削減率', value: '80', unit: '%減', icon: <ChevronRight size={20} className="rotate-90"/> },
+                        { label: '見積精度', value: '+90', unit: '%向上', icon: <Zap size={20}/> },
 
                     ].map((stat, i) => (
                         <div key={i} className="text-center group">
