@@ -68,9 +68,14 @@
               <h1 class="text-2xl md:text-3xl font-black">見積ボタンクリック統計</h1>
               <p class="text-slate-400 text-sm mt-1">このブラウザのlocalStorageに保存されたデータを集計表示します。</p>
             </div>
-            <button id="btnClear" class="text-xs px-3 py-1.5 bg-white/5 hover:bg-white/10 text-slate-300 rounded-md border border-white/10 transition-colors">
-              データを消去
-            </button>
+            <div class="flex items-center gap-2">
+              <button id="btnRefresh" class="text-xs px-3 py-1.5 bg-white/5 hover:bg-white/10 text-slate-300 rounded-md border border-white/10 transition-colors">
+                更新
+              </button>
+              <button id="btnClear" class="text-xs px-3 py-1.5 bg-white/5 hover:bg-white/10 text-slate-300 rounded-md border border-white/10 transition-colors">
+                データを消去
+              </button>
+            </div>
           </div>
           <div class="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4">
             <div class="p-4 rounded-xl bg-black/30 border border-white/10">
@@ -354,7 +359,15 @@
           init();
         });
       }
+      // 初期描画
       init();
+      // 他タブでの作成や、このタブに戻ってきた時に自動更新
+      window.addEventListener('storage', (e) => {
+        if (e.key === 'estimatePressEvents' || e.key === 'estimatePressCount') init();
+      });
+      window.addEventListener('focus', () => init());
+      // 手動更新
+      document.getElementById('btnRefresh')?.addEventListener('click', () => init());
     </script>
   </body>
 </html>

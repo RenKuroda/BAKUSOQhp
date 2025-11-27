@@ -65,102 +65,112 @@
       <div class="max-w-5xl mx-auto glass-card rounded-2xl p-8 shadow-2xl shadow-black/40">
         <h1 class="text-3xl font-black mb-2">お問い合わせ</h1>
         <p class="text-slate-400 mb-8">以下のフォームにご入力ください。送信後、お使いのメールアプリが起動します。</p>
+        
 
-        <!-- Toggle -->
-        <div class="mb-6 inline-flex rounded-full border border-white/10 overflow-hidden">
-          <button id="btnGForm" class="px-4 py-2 text-sm font-bold bg-white/10 text-white">Googleフォーム</button>
-          <button id="btnNative" class="px-4 py-2 text-sm font-bold text-slate-300 hover:text-white">サイト内フォーム</button>
-        </div>
-
-        <!-- Google Form (default) -->
-        <div id="gfWrap" class="rounded-2xl overflow-hidden border border-white/10 bg-black/20">
-          <iframe
-            src="https://forms.gle/8D9hjGUhXeYyTLUc6"
-            id="gformFrame"
-            class="w-full"
-            style="height: 2800px;"
-            scrolling="no"
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
-          ></iframe>
-        </div>
+        
 
         <!-- Native form (fallback / alternative) -->
-        <form id="contactForm" class="space-y-5 hidden">
+        <form id="contactForm" class="space-y-6 bg-white text-slate-900 rounded-2xl p-6 md:p-8 shadow-xl">
           <div>
-            <label class="block text-sm text-white mb-1">会社名 <span class="text-xs align-middle">（必須）</span></label>
-            <input type="text" name="company" required class="w-full p-3 bg-black/20 border border-white/10 rounded-lg text-white outline-none focus:ring-1 focus:ring-secondary" />
+            <label class="block text-sm text-slate-800 mb-1">会社名
+              <span class="ml-2 inline-block px-2 py-0.5 rounded-full bg-red-50 text-red-700 border border-red-200 align-middle">必須</span>
+            </label>
+              <input type="text" name="company" required placeholder="例）株式会社〇〇"
+                     class="w-full p-3.5 md:p-4 text-base bg-slate-50 text-slate-900 border border-slate-300 rounded-lg placeholder-slate-400 outline-none focus:ring-2 focus:ring-secondary focus:border-secondary" />
           </div>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label class="block text-sm text-white mb-1">お名前 <span class="text-xs align-middle">（必須）</span></label>
-              <input type="text" name="name" required class="w-full p-3 bg-black/20 border border-white/10 rounded-lg text-white outline-none focus:ring-1 focus:ring-secondary" />
+              <label class="block text-sm text-slate-800 mb-1">お名前
+                <span class="ml-2 inline-block px-2 py-0.5 rounded-full bg-red-50 text-red-700 border border-red-200 align-middle">必須</span>
+              </label>
+              <input type="text" name="name" required placeholder="例）山田 太郎"
+                     class="w-full p-3.5 md:p-4 text-base bg-slate-50 text-slate-900 border border-slate-300 rounded-lg placeholder-slate-400 outline-none focus:ring-2 focus:ring-secondary focus:border-secondary" />
             </div>
             <div>
-              <label class="block text-sm text-white mb-1">メールアドレス <span class="text-xs align-middle">（任意）</span></label>
-              <input type="email" name="email" class="w-full p-3 bg-black/20 border border-white/10 rounded-lg text-white outline-none focus:ring-1 focus:ring-secondary" />
+              <label class="block text-sm text-slate-800 mb-1">メールアドレス
+                <span class="ml-2 inline-block px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200 align-middle">任意</span>
+              </label>
+              <input type="email" name="email" placeholder="例）name@example.com"
+                     class="w-full p-3.5 md:p-4 text-base bg-slate-50 text-slate-900 border border-slate-300 rounded-lg placeholder-slate-400 outline-none focus:ring-2 focus:ring-secondary focus:border-secondary" />
             </div>
           </div>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label class="block text-sm text-white mb-1">電話番号 <span class="text-xs align-middle">（必須）</span></label>
-              <input type="tel" name="phone" required class="w-full p-3 bg-black/20 border border-white/10 rounded-lg text-white outline-none focus:ring-1 focus:ring-secondary" />
+              <label class="block text-sm text-slate-800 mb-1">電話番号
+                <span class="ml-2 inline-block px-2 py-0.5 rounded-full bg-red-50 text-red-700 border border-red-200 align-middle">必須</span>
+              </label>
+              <input type="tel" name="phone" required placeholder="例）08012345678（ハイフン不要）"
+                     class="w-full p-3.5 md:p-4 text-base bg-slate-50 text-slate-900 border border-slate-300 rounded-lg placeholder-slate-400 outline-none focus:ring-2 focus:ring-secondary focus:border-secondary" />
             </div>
             <!-- ご用件は「ご希望の内容」ラジオ選択と同期するため hidden input に変更 -->
             <input type="hidden" name="topic" value="">
           </div>
           <!-- 従業員規模 -->
-          <fieldset class="border border-white/10 rounded-lg p-4">
-            <legend class="text-sm text-white mb-2">従業員規模 <span class="text-xs align-middle">（必須）</span></legend>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 text-sm">
-              <label class="inline-flex items-center gap-2"><input type="radio" name="employeeScale" value="1〜5名" required class="accent-secondary" />1〜5名</label>
-              <label class="inline-flex items-center gap-2"><input type="radio" name="employeeScale" value="6〜10名" class="accent-secondary" />6〜10名</label>
-              <label class="inline-flex items-center gap-2"><input type="radio" name="employeeScale" value="11〜30名" class="accent-secondary" />11〜30名</label>
-              <label class="inline-flex items-center gap-2"><input type="radio" name="employeeScale" value="31〜50名" class="accent-secondary" />31〜50名</label>
-              <label class="inline-flex items-center gap-2"><input type="radio" name="employeeScale" value="51名以上" class="accent-secondary" />51名以上</label>
+          <fieldset class="border border-slate-200 rounded-lg p-4 bg-white">
+            <legend class="text-base md:text-lg font-bold text-slate-900 mb-3">
+              従業員規模
+              <span class="ml-2 inline-block px-2 py-0.5 rounded-full bg-red-50 text-red-700 border border-red-200 align-middle text-xs">必須</span>
+            </legend>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-base">
+              <label class="inline-flex items-center gap-3 px-4 py-3 rounded-md border border-slate-300 bg-slate-50 hover:bg-slate-100 text-slate-800"><input type="radio" name="employeeScale" value="1〜5名" required class="accent-secondary" />1〜5名</label>
+              <label class="inline-flex items-center gap-3 px-4 py-3 rounded-md border border-slate-300 bg-slate-50 hover:bg-slate-100 text-slate-800"><input type="radio" name="employeeScale" value="6〜10名" class="accent-secondary" />6〜10名</label>
+              <label class="inline-flex items-center gap-3 px-4 py-3 rounded-md border border-slate-300 bg-slate-50 hover:bg-slate-100 text-slate-800"><input type="radio" name="employeeScale" value="11〜30名" class="accent-secondary" />11〜30名</label>
+              <label class="inline-flex items-center gap-3 px-4 py-3 rounded-md border border-slate-300 bg-slate-50 hover:bg-slate-100 text-slate-800"><input type="radio" name="employeeScale" value="31〜50名" class="accent-secondary" />31〜50名</label>
+              <label class="inline-flex items-center gap-3 px-4 py-3 rounded-md border border-slate-300 bg-slate-50 hover:bg-slate-100 text-slate-800"><input type="radio" name="employeeScale" value="51名以上" class="accent-secondary" />51名以上</label>
             </div>
           </fieldset>
           <!-- どこで知ったか -->
-          <fieldset class="border border-white/10 rounded-lg p-4">
-            <legend class="text-sm text-white mb-2">BAKUSOQをどちらで知りましたか？ <span class="text-xs align-middle">（必須）</span></legend>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-              <label class="inline-flex items-center gap-2"><input type="radio" name="howHeard" value="YouTube広告" required class="accent-secondary" />YouTube広告</label>
-              <label class="inline-flex items-center gap-2"><input type="radio" name="howHeard" value="Facebook/Instagram広告（Meta広告）" class="accent-secondary" />Facebook/Instagram広告（Meta広告）</label>
-              <label class="inline-flex items-center gap-2"><input type="radio" name="howHeard" value="FAX" class="accent-secondary" />FAX</label>
-              <label class="inline-flex items-center gap-2"><input type="radio" name="howHeard" value="ご紹介" class="accent-secondary" />ご紹介</label>
-              <label class="inline-flex items-center gap-2"><input type="radio" name="howHeard" value="展示会" class="accent-secondary" />展示会</label>
-              <label class="inline-flex items-center gap-2"><input type="radio" name="howHeard" value="その他" class="accent-secondary" />その他</label>
+          <fieldset class="border border-slate-200 rounded-lg p-4 bg-white">
+            <legend class="text-base md:text-lg font-bold text-slate-900 mb-3">
+              BAKUSOQをどちらで知りましたか？
+              <span class="ml-2 inline-block px-2 py-0.5 rounded-full bg-red-50 text-red-700 border border-red-200 align-middle text-xs">必須</span>
+            </legend>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-base">
+              <label class="inline-flex items-center gap-3 px-4 py-3 rounded-md border border-slate-300 bg-slate-50 hover:bg-slate-100 text-slate-800"><input type="radio" name="howHeard" value="YouTube広告" required class="accent-secondary" />YouTube広告</label>
+              <label class="inline-flex items-center gap-3 px-4 py-3 rounded-md border border-slate-300 bg-slate-50 hover:bg-slate-100 text-slate-800"><input type="radio" name="howHeard" value="Facebook/Instagram広告（Meta広告）" class="accent-secondary" />Facebook/Instagram広告（Meta広告）</label>
+              <label class="inline-flex items-center gap-3 px-4 py-3 rounded-md border border-slate-300 bg-slate-50 hover:bg-slate-100 text-slate-800"><input type="radio" name="howHeard" value="FAX" class="accent-secondary" />FAX</label>
+              <label class="inline-flex items-center gap-3 px-4 py-3 rounded-md border border-slate-300 bg-slate-50 hover:bg-slate-100 text-slate-800"><input type="radio" name="howHeard" value="ご紹介" class="accent-secondary" />ご紹介</label>
+              <label class="inline-flex items-center gap-3 px-4 py-3 rounded-md border border-slate-300 bg-slate-50 hover:bg-slate-100 text-slate-800"><input type="radio" name="howHeard" value="展示会" class="accent-secondary" />展示会</label>
+              <label class="inline-flex items-center gap-3 px-4 py-3 rounded-md border border-slate-300 bg-slate-50 hover:bg-slate-100 text-slate-800"><input type="radio" name="howHeard" value="その他" class="accent-secondary" />その他</label>
             </div>
           </fieldset>
           <!-- 現在の課題 -->
-          <fieldset class="border border-white/10 rounded-lg p-4">
-            <legend class="text-sm text-white mb-2">現在、見積もり業務で課題に感じている点があればお聞かせください</legend>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-              <label class="inline-flex items-center gap-2"><input type="radio" name="currentIssue" value="時間がかかる" class="accent-secondary" />時間がかかる</label>
-              <label class="inline-flex items-center gap-2"><input type="radio" name="currentIssue" value="属人化している" class="accent-secondary" />属人化している</label>
-              <label class="inline-flex items-center gap-2"><input type="radio" name="currentIssue" value="精度に不安がある" class="accent-secondary" />精度に不安がある</label>
-              <label class="inline-flex items-center gap-2"><input type="radio" name="currentIssue" value="その他" class="accent-secondary" />その他</label>
+          <fieldset class="border border-slate-200 rounded-lg p-4 bg-white">
+            <legend class="text-base md:text-lg font-bold text-slate-900 mb-3">
+              現在、見積もり業務で課題に感じている点があればお聞かせください
+              <span class="ml-2 inline-block px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200 align-middle text-xs">任意</span>
+            </legend>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-base">
+              <label class="inline-flex items-center gap-3 px-4 py-3 rounded-md border border-slate-300 bg-slate-50 hover:bg-slate-100 text-slate-800"><input type="radio" name="currentIssue" value="時間がかかる" class="accent-secondary" />時間がかかる</label>
+              <label class="inline-flex items-center gap-3 px-4 py-3 rounded-md border border-slate-300 bg-slate-50 hover:bg-slate-100 text-slate-800"><input type="radio" name="currentIssue" value="属人化している" class="accent-secondary" />属人化している</label>
+              <label class="inline-flex items-center gap-3 px-4 py-3 rounded-md border border-slate-300 bg-slate-50 hover:bg-slate-100 text-slate-800"><input type="radio" name="currentIssue" value="精度に不安がある" class="accent-secondary" />精度に不安がある</label>
+              <label class="inline-flex items-center gap-3 px-4 py-3 rounded-md border border-slate-300 bg-slate-50 hover:bg-slate-100 text-slate-800"><input type="radio" name="currentIssue" value="その他" class="accent-secondary" />その他</label>
             </div>
           </fieldset>
           <!-- ご希望の内容 -->
-          <fieldset class="border border-white/10 rounded-lg p-4">
-            <legend class="text-sm text-white mb-2">ご希望の内容をお選びください <span class="text-xs align-middle">（必須）</span></legend>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm" id="desiredWrap">
-              <label class="inline-flex items-center gap-2"><input type="radio" name="desired" value="BAKUSOQモニターに申し込みたい" required class="accent-secondary" />BAKUSOQモニターに申し込みたい</label>
-              <label class="inline-flex items-center gap-2"><input type="radio" name="desired" value="サービスの詳しい説明・デモを受けたい" class="accent-secondary" />サービスの詳しい説明・デモを受けたい</label>
-              <label class="inline-flex items-center gap-2"><input type="radio" name="desired" value="まずは資料だけ見てみたい" class="accent-secondary" />まずは資料だけ見てみたい</label>
-              <label class="inline-flex items-center gap-2"><input type="radio" name="desired" value="その他のお問い合わせ" class="accent-secondary" />その他のお問い合わせ</label>
+          <fieldset class="border border-slate-200 rounded-lg p-4 bg-white">
+            <legend class="text-base md:text-lg font-bold text-slate-900 mb-3">
+              ご希望の内容をお選びください
+              <span class="ml-2 inline-block px-2 py-0.5 rounded-full bg-red-50 text-red-700 border border-red-200 align-middle text-xs">必須</span>
+            </legend>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-base" id="desiredWrap">
+              <label class="inline-flex items-center gap-3 px-4 py-3 rounded-md border border-slate-300 bg-slate-50 hover:bg-slate-100 text-slate-800"><input type="radio" name="desired" value="BAKUSOQモニターに申し込みたい" required class="accent-secondary" />BAKUSOQモニターに申し込みたい</label>
+              <label class="inline-flex items-center gap-3 px-4 py-3 rounded-md border border-slate-300 bg-slate-50 hover:bg-slate-100 text-slate-800"><input type="radio" name="desired" value="サービスの詳しい説明・デモを受けたい" class="accent-secondary" />サービスの詳しい説明・デモを受けたい</label>
+              <label class="inline-flex items-center gap-3 px-4 py-3 rounded-md border border-slate-300 bg-slate-50 hover:bg-slate-100 text-slate-800"><input type="radio" name="desired" value="まずは資料だけ見てみたい" class="accent-secondary" />まずは資料だけ見てみたい</label>
+              <label class="inline-flex items-center gap-3 px-4 py-3 rounded-md border border-slate-300 bg-slate-50 hover:bg-slate-100 text-slate-800"><input type="radio" name="desired" value="その他のお問い合わせ" class="accent-secondary" />その他のお問い合わせ</label>
             </div>
           </fieldset>
           <div>
-            <label class="block text-sm text-white mb-1">内容 <span class="text-xs align-middle">（任意）</span></label>
-            <textarea name="message" rows="5" class="w-full p-3 bg-black/20 border border-white/10 rounded-lg text-white outline-none focus:ring-1 focus:ring-secondary" placeholder="できるだけ詳細にご記入ください。"></textarea>
+            <label class="block text-sm text-slate-800 mb-1">内容
+              <span class="ml-2 inline-block px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200 align-middle">任意</span>
+            </label>
+            <textarea name="message" rows="5" class="w-full p-3.5 md:p-4 text-base bg-slate-50 text-slate-900 border border-slate-300 rounded-lg placeholder-slate-400 outline-none focus:ring-2 focus:ring-secondary focus:border-secondary" placeholder="できるだけ詳細にご記入ください。"></textarea>
           </div>
-          <button id="submitBtn" type="submit" class="w-full bg-neon-gradient text-background font-black py-3 rounded-none skew-x-[-10deg] shadow-neon hover:shadow-neon-strong transition">
-            <span class="skew-x-[10deg] text-white">送信する（メールアプリが開きます）</span>
+          <button id="submitBtn" type="submit" class="w-full mt-4 bg-slate-900 text-white font-bold py-4 rounded-lg shadow-lg hover:bg-slate-800 focus:outline-none focus:ring-4 focus:ring-slate-700/50 transition">
+            送信する
           </button>
-          <p id="formMsg" class="text-xs text-white mt-2"></p>
-          <p class="text-xs text-white mt-1">メールアプリが開かない場合は <a href="mailto:support@genbaboxx.co.jp" class="text-secondary underline">support@genbaboxx.co.jp</a> 宛に直接お送りください。</p>
+          <p id="formMsg" class="text-xs text-slate-700 mt-2"></p>
+          <p class="text-xs text-slate-700 mt-1">メールアプリが開かない場合は <a href="mailto:support@genbaboxx.co.jp" class="text-primary underline">support@genbaboxx.co.jp</a> 宛に直接お送りください。</p>
         </form>
       </div>
     </main>
@@ -170,38 +180,7 @@
       const form = document.getElementById('contactForm');
       const formMsg = document.getElementById('formMsg');
       const submitBtn = document.getElementById('submitBtn');
-      const gfWrap = document.getElementById('gfWrap');
-      const gformFrame = document.getElementById('gformFrame');
-      const btnGForm = document.getElementById('btnGForm');
-      const btnNative = document.getElementById('btnNative');
-      // Resize Google Form iframe to avoid inner scrolling (cannot auto-read cross-origin height)
-      function setGFormHeight(){
-        if(!gformFrame) return;
-        const w = window.innerWidth || document.documentElement.clientWidth;
-        let h = 2800;            // desktop default (generous)
-        if (w < 640) h = 4200;   // mobile: tallest to avoid inner scroll
-        else if (w < 1024) h = 3400; // tablet
-        gformFrame.style.height = h + 'px';
-      }
-      setGFormHeight();
-      window.addEventListener('resize', setGFormHeight);
-      // Toggle behavior
-      btnGForm?.addEventListener('click', (e) => {
-        e.preventDefault();
-        gfWrap.classList.remove('hidden');
-        form.classList.add('hidden');
-        btnGForm.classList.add('bg-white/10','text-white');
-        btnNative.classList.remove('bg-white/10','text-white');
-        btnNative.classList.add('text-slate-300');
-      });
-      btnNative?.addEventListener('click', (e) => {
-        e.preventDefault();
-        gfWrap.classList.add('hidden');
-        form.classList.remove('hidden');
-        btnNative.classList.add('bg-white/10','text-white');
-        btnGForm.classList.remove('bg-white/10','text-white');
-        btnGForm.classList.add('text-slate-300');
-      });
+      
       
       // desired の選択を hidden の topic に同期
       document.getElementById('desiredWrap')?.addEventListener('change', (e) => {
