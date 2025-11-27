@@ -267,6 +267,8 @@
             '\n【ご用件（同期）】', fd.get('topic') || '',
             '\n\n【内容】\n', fd.get('message') || ''
           ].join(' ');
+          // Show thanks modal before opening mail app (we cannot detect completion)
+          openThanksModal();
           window.location.href = `mailto:${to}?subject=${encode(subject)}&body=${encode(body)}`;
         } finally {
           submitBtn.disabled = false;
