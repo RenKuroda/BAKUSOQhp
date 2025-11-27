@@ -67,8 +67,10 @@
         <div id="gfWrap" class="rounded-2xl overflow-hidden border border-white/10 bg-black/20">
           <iframe
             src="https://forms.gle/8D9hjGUhXeYyTLUc6"
+            id="gformFrame"
             class="w-full"
-            style="height: 1200px;"
+            style="height: 1600px;"
+            scrolling="no"
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"
           ></iframe>
@@ -124,8 +126,20 @@
       const formMsg = document.getElementById('formMsg');
       const submitBtn = document.getElementById('submitBtn');
       const gfWrap = document.getElementById('gfWrap');
+      const gformFrame = document.getElementById('gformFrame');
       const btnGForm = document.getElementById('btnGForm');
       const btnNative = document.getElementById('btnNative');
+      // Resize Google Form iframe to avoid inner scrolling (cannot auto-read cross-origin height)
+      function setGFormHeight(){
+        if(!gformFrame) return;
+        const w = window.innerWidth || document.documentElement.clientWidth;
+        let h = 1600;          // desktop default
+        if (w < 640) h = 2400; // mobile
+        else if (w < 1024) h = 2000; // tablet
+        gformFrame.style.height = h + 'px';
+      }
+      setGFormHeight();
+      window.addEventListener('resize', setGFormHeight);
       // Toggle behavior
       btnGForm?.addEventListener('click', (e) => {
         e.preventDefault();
