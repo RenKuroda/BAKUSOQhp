@@ -1,7 +1,13 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { BuildingStructure, EstimateResult, MachineSpec, ExtendedInputState } from '../types';
 import { generateAiEstimate } from '../services/geminiService';
 import { Loader2, Calculator, ArrowRight, CheckCircle2, FileText, RefreshCw, Zap } from 'lucide-react';
+
+declare global {
+  interface Window {
+    gtag?: (...args: any[]) => void;
+  }
+}
 
 export const DemoWidget: React.FC = () => {
   const [step, setStep] = useState<'input' | 'processing' | 'result'>('input');
@@ -9,6 +15,18 @@ export const DemoWidget: React.FC = () => {
   const [structure, setStructure] = useState<BuildingStructure>(BuildingStructure.WOOD);
   const [roadWidth, setRoadWidth] = useState<string>('normal');
   const [result, setResult] = useState<EstimateResult | null>(null);
+  const [pressCount, setPressCount] = useState<number>(() => {
+    const v = typeof window !== 'undefined' ? window.localStorage.getItem('estimatePressCount') : null;
+    return v ? Number(v) : 0;
+  });
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem('estimatePressCount', String(pressCount));
+    } catch {
+      // ignore
+    }
+  }, [pressCount]);
 
   // 追加フィールド（1枚目・2枚目の情報）
   const [ext, setExt] = useState<ExtendedInputState>({
@@ -26,6 +44,24 @@ export const DemoWidget: React.FC = () => {
   });
 
   const handleCalculate = async () => {
+    // 押下回数をカウント（処理前にインクリメント）
+    setPressCount((c) => {
+      const next = c + 1;
+      // 任意: GA4 イベント送信（設定済みの場合のみ）
+      window.gtag?.('event', 'estimate_generate_click', { value: 1, pressCount: next });
+      return next;
+    });
+    // ローカルイベントの保存（タイムスタンプ配列）
+    try {
+      const raw = window.localStorage.getItem('estimatePressEvents');
+      const arr: number[] = raw ? JSON.parse(raw) : [];
+      arr.push(Date.now());
+      // 上限を決めて古いものから捨てる（例: 5000件）
+      const trimmed = arr.slice(-5000);
+      window.localStorage.setItem('estimatePressEvents', JSON.stringify(trimmed));
+    } catch {
+      // ignore
+    }
     setStep('processing');
     await new Promise(r => setTimeout(r, 1500)); // 少し長めに演出
     
@@ -268,7 +304,7 @@ export const DemoWidget: React.FC = () => {
                     value={m.attachment}
                     onChange={(e) => updateMachine(idx, { attachment: e.target.value })}
                     className="w-full p-2.5 bg-black/20 border border-white/10 rounded-lg text-sm text-white"
-                  >
+                >
                     {['バケット','ブレーカー','カッター'].map(o => <option key={o} value={o} className="bg-slate-900">{o}</option>)}
                 </select>
                 </div>
@@ -327,7 +363,8 @@ export const DemoWidget: React.FC = () => {
 
           <button
             onClick={handleCalculate}
-            className="w-full mt-6 bg-gradient-to-r from-primary to-secondary text-background py-5 sm:py-4 rounded-xl font-black text-base sm:text-sm shadow-lg shadow-cyan-500/20 flex items-center justify-center gap-2 transition-all transform hover:scale-[1.02] hover:shadow-cyan-500/40 active:scale-[0.98] group"
+            disabled={step === 'processing'}
+            className="w-full mt-6 bg-gradient-to-r from-primary to-secondary text-background py-5 sm:py-4 rounded-xl font-black text-base sm:text-sm shadow-lg shadow-cyan-500/20 flex items-center justify-center gap-2 transition-all transform hover:scale-[1.02] hover:shadow-cyan-500/40 active:scale-[0.98] group disabled:opacity-60 disabled:cursor-not-allowed"
           >
             <span>見積もりを生成</span>
             <Zap size={18} className="fill-current group-hover:rotate-12 transition-transform" />

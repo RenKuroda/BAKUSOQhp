@@ -8,6 +8,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+            <!-- Google tag (gtag.js) -->
+            <script async src="https://www.googletagmanager.com/gtag/js?id=G-1RC4MKY8RN"></script>
+            <script>
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-1RC4MKY8RN');
+              window.gtag = window.gtag || gtag;
+            </script>
     <script>
       tailwind.config = {
         theme: {
@@ -97,16 +106,52 @@
               <label class="block text-sm text-white mb-1">電話番号 <span class="text-xs align-middle">（必須）</span></label>
               <input type="tel" name="phone" required class="w-full p-3 bg-black/20 border border-white/10 rounded-lg text-white outline-none focus:ring-1 focus:ring-secondary" />
             </div>
-            <div>
-              <label class="block text-sm text-white mb-1">ご用件 <span class="text-xs align-middle">（必須）</span></label>
-              <select name="topic" required class="w-full p-3 bg-black/20 border border-white/10 rounded-lg text-white outline-none focus:ring-1 focus:ring-secondary">
-                <option value="デモ依頼">デモ依頼</option>
-                <option value="資料請求">資料請求</option>
-                <option value="料金・導入相談">料金・導入相談</option>
-                <option value="その他">その他</option>
-              </select>
-            </div>
+            <!-- ご用件は「ご希望の内容」ラジオ選択と同期するため hidden input に変更 -->
+            <input type="hidden" name="topic" value="">
           </div>
+          <!-- 従業員規模 -->
+          <fieldset class="border border-white/10 rounded-lg p-4">
+            <legend class="text-sm text-white mb-2">従業員規模 <span class="text-xs align-middle">（必須）</span></legend>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 text-sm">
+              <label class="inline-flex items-center gap-2"><input type="radio" name="employeeScale" value="1〜5名" required class="accent-secondary" />1〜5名</label>
+              <label class="inline-flex items-center gap-2"><input type="radio" name="employeeScale" value="6〜10名" class="accent-secondary" />6〜10名</label>
+              <label class="inline-flex items-center gap-2"><input type="radio" name="employeeScale" value="11〜30名" class="accent-secondary" />11〜30名</label>
+              <label class="inline-flex items-center gap-2"><input type="radio" name="employeeScale" value="31〜50名" class="accent-secondary" />31〜50名</label>
+              <label class="inline-flex items-center gap-2"><input type="radio" name="employeeScale" value="51名以上" class="accent-secondary" />51名以上</label>
+            </div>
+          </fieldset>
+          <!-- どこで知ったか -->
+          <fieldset class="border border-white/10 rounded-lg p-4">
+            <legend class="text-sm text-white mb-2">BAKUSOQをどちらで知りましたか？ <span class="text-xs align-middle">（必須）</span></legend>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+              <label class="inline-flex items-center gap-2"><input type="radio" name="howHeard" value="YouTube広告" required class="accent-secondary" />YouTube広告</label>
+              <label class="inline-flex items-center gap-2"><input type="radio" name="howHeard" value="Facebook/Instagram広告（Meta広告）" class="accent-secondary" />Facebook/Instagram広告（Meta広告）</label>
+              <label class="inline-flex items-center gap-2"><input type="radio" name="howHeard" value="FAX" class="accent-secondary" />FAX</label>
+              <label class="inline-flex items-center gap-2"><input type="radio" name="howHeard" value="ご紹介" class="accent-secondary" />ご紹介</label>
+              <label class="inline-flex items-center gap-2"><input type="radio" name="howHeard" value="展示会" class="accent-secondary" />展示会</label>
+              <label class="inline-flex items-center gap-2"><input type="radio" name="howHeard" value="その他" class="accent-secondary" />その他</label>
+            </div>
+          </fieldset>
+          <!-- 現在の課題 -->
+          <fieldset class="border border-white/10 rounded-lg p-4">
+            <legend class="text-sm text-white mb-2">現在、見積もり業務で課題に感じている点があればお聞かせください</legend>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+              <label class="inline-flex items-center gap-2"><input type="radio" name="currentIssue" value="時間がかかる" class="accent-secondary" />時間がかかる</label>
+              <label class="inline-flex items-center gap-2"><input type="radio" name="currentIssue" value="属人化している" class="accent-secondary" />属人化している</label>
+              <label class="inline-flex items-center gap-2"><input type="radio" name="currentIssue" value="精度に不安がある" class="accent-secondary" />精度に不安がある</label>
+              <label class="inline-flex items-center gap-2"><input type="radio" name="currentIssue" value="その他" class="accent-secondary" />その他</label>
+            </div>
+          </fieldset>
+          <!-- ご希望の内容 -->
+          <fieldset class="border border-white/10 rounded-lg p-4">
+            <legend class="text-sm text-white mb-2">ご希望の内容をお選びください <span class="text-xs align-middle">（必須）</span></legend>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm" id="desiredWrap">
+              <label class="inline-flex items-center gap-2"><input type="radio" name="desired" value="BAKUSOQモニターに申し込みたい" required class="accent-secondary" />BAKUSOQモニターに申し込みたい</label>
+              <label class="inline-flex items-center gap-2"><input type="radio" name="desired" value="サービスの詳しい説明・デモを受けたい" class="accent-secondary" />サービスの詳しい説明・デモを受けたい</label>
+              <label class="inline-flex items-center gap-2"><input type="radio" name="desired" value="まずは資料だけ見てみたい" class="accent-secondary" />まずは資料だけ見てみたい</label>
+              <label class="inline-flex items-center gap-2"><input type="radio" name="desired" value="その他のお問い合わせ" class="accent-secondary" />その他のお問い合わせ</label>
+            </div>
+          </fieldset>
           <div>
             <label class="block text-sm text-white mb-1">内容 <span class="text-xs align-middle">（任意）</span></label>
             <textarea name="message" rows="5" class="w-full p-3 bg-black/20 border border-white/10 rounded-lg text-white outline-none focus:ring-1 focus:ring-secondary" placeholder="できるだけ詳細にご記入ください。"></textarea>
@@ -158,6 +203,15 @@
         btnGForm.classList.add('text-slate-300');
       });
       
+      // desired の選択を hidden の topic に同期
+      document.getElementById('desiredWrap')?.addEventListener('change', (e) => {
+        const target = e.target;
+        if (target && target.name === 'desired') {
+          const topicHidden = form.querySelector('input[name=\"topic\"]');
+          if (topicHidden) topicHidden.value = target.value || '';
+        }
+      });
+      
       form.addEventListener('submit', async function(e){
         e.preventDefault();
         formMsg.textContent = '';
@@ -178,6 +232,10 @@
             email: fd.get('email') || '',
             phone: fd.get('phone') || '',
             topic: fd.get('topic') || '',
+            employeeScale: fd.get('employeeScale') || '',
+            howHeard: fd.get('howHeard') || '',
+            currentIssue: fd.get('currentIssue') || '',
+            desired: fd.get('desired') || '',
             message: fd.get('message') || ''
           };
           const res = await fetch('https://formsubmit.co/ajax/support@genbaboxx.co.jp', {
@@ -200,7 +258,11 @@
             '\n【お名前】', fd.get('name') || '',
             '\n【メール】', fd.get('email') || '',
             '\n【電話】', fd.get('phone') || '',
-            '\n【ご用件】', fd.get('topic') || '',
+            '\n【従業員規模】', fd.get('employeeScale') || '',
+            '\n【どこで知ったか】', fd.get('howHeard') || '',
+            '\n【現在の課題】', fd.get('currentIssue') || '',
+            '\n【ご希望の内容】', fd.get('desired') || '',
+            '\n【ご用件（同期）】', fd.get('topic') || '',
             '\n\n【内容】\n', fd.get('message') || ''
           ].join(' ');
           window.location.href = `mailto:${to}?subject=${encode(subject)}&body=${encode(body)}`;

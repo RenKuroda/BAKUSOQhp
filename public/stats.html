@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>見積ボタンクリック統計 | BAKUSOQ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+JP:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1RC4MKY8RN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-1RC4MKY8RN');
+      window.gtag = window.gtag || gtag;
+    </script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: { sans: ['"Noto Sans JP"', '"Inter"', 'sans-serif'] },
+            colors: {
+              background: '#050B14',
+              surface: '#0F172A',
+              primary: '#00A3FF',
+              secondary: '#00F0FF',
+            },
+            boxShadow: {
+              neon: '0 0 20px rgba(0, 240, 255, 0.3)',
+              'neon-strong': '0 0 30px rgba(0, 240, 255, 0.5)',
+            },
+          }
+        }
+      }
+    </script>
+    <style>
+      body { background-color:#050B14; color:#F8FAFC; }
+      .glass-card {
+        background: rgba(15, 23, 42, 0.6);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      .bar { height: 10px; border-radius: 9999px; }
+    </style>
+  </head>
+  <body class="min-h-screen font-sans">
+    <div class="fixed inset-0 -z-10 pointer-events-none">
+      <div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-primary/20 rounded-full blur-[120px] mix-blend-screen opacity-40"></div>
+      <div class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-secondary/10 rounded-full blur-[120px] mix-blend-screen opacity-30"></div>
+    </div>
+
+    <header class="sticky top-0 z-50 bg-[#050B14]/80 backdrop-blur-md border-b border-white/10">
+      <div class="container mx-auto px-4 h-16 flex items-center justify-between">
+        <a href="/" class="text-2xl font-black italic">BAKUSOQ</a>
+        <a href="/" class="text-sm text-slate-400 hover:text-white">戻る</a>
+      </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-10">
+      <div class="max-w-5xl mx-auto space-y-8">
+        <div class="glass-card rounded-2xl p-6">
+          <div class="flex items-center justify-between">
+            <div>
+              <h1 class="text-2xl md:text-3xl font-black">見積ボタンクリック統計</h1>
+              <p class="text-slate-400 text-sm mt-1">このブラウザのlocalStorageに保存されたデータを集計表示します。</p>
+            </div>
+            <button id="btnClear" class="text-xs px-3 py-1.5 bg-white/5 hover:bg-white/10 text-slate-300 rounded-md border border-white/10 transition-colors">
+              データを消去
+            </button>
+          </div>
+          <div class="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="p-4 rounded-xl bg-black/30 border border-white/10">
+              <div class="text-xs text-slate-400">累計</div>
+              <div id="total" class="text-2xl font-black">0</div>
+            </div>
+            <div class="p-4 rounded-xl bg-black/30 border border-white/10">
+              <div class="text-xs text-slate-400">本日</div>
+              <div id="today" class="text-2xl font-black">0</div>
+            </div>
+            <div class="p-4 rounded-xl bg-black/30 border border-white/10">
+              <div class="text-xs text-slate-400">直近7日</div>
+              <div id="week" class="text-2xl font-black">0</div>
+            </div>
+            <div class="p-4 rounded-xl bg-black/30 border border-white/10">
+              <div class="text-xs text-slate-400">直近30日</div>
+              <div id="month" class="text-2xl font-black">0</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Calendar (Monthly) -->
+        <div class="glass-card rounded-2xl p-6">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-xl font-bold">月別カレンダー</h2>
+            <div class="flex items-center gap-2">
+              <button id="prevMonth" class="text-xs px-3 py-1.5 bg-white/5 hover:bg-white/10 text-slate-300 rounded-md border border-white/10">先月</button>
+              <div id="monthLabel" class="text-sm font-bold tabular-nums"></div>
+              <button id="nextMonth" class="text-xs px-3 py-1.5 bg-white/5 hover:bg-white/10 text-slate-300 rounded-md border border-white/10">翌月</button>
+            </div>
+          </div>
+          <div class="grid grid-cols-7 text-center text-xs text-slate-400">
+            <div>日</div><div>月</div><div>火</div><div>水</div><div>木</div><div>金</div><div>土</div>
+          </div>
+          <div id="calendarGrid" class="grid grid-cols-7 gap-2 mt-2"></div>
+        </div>
+
+        <div class="glass-card rounded-2xl p-6">
+          <h2 class="text-xl font-bold mb-4">日別</h2>
+          <div id="dailyContainer" class="space-y-2"></div>
+        </div>
+
+        <div class="glass-card rounded-2xl p-6">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-xl font-bold">時間別</h2>
+            <div class="flex items-center gap-2">
+              <button id="prevDay" class="text-xs px-3 py-1.5 bg-white/5 hover:bg-white/10 text-slate-300 rounded-md border border-white/10">前日</button>
+              <div id="dayLabel" class="text-sm font-bold tabular-nums"></div>
+              <button id="nextDay" class="text-xs px-3 py-1.5 bg-white/5 hover:bg-white/10 text-slate-300 rounded-md border border-white/10">翌日</button>
+            </div>
+          </div>
+          <div id="hourlyContainer" class="space-y-2"></div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      function getEvents() {
+        try {
+          const raw = localStorage.getItem('estimatePressEvents');
+          if (!raw) return [];
+          const arr = JSON.parse(raw);
+          return Array.isArray(arr) ? arr : [];
+        } catch {
+          return [];
+        }
+      }
+
+      function fmtDate(d) {
+        const y = d.getFullYear();
+        const m = String(d.getMonth() + 1).padStart(2, '0');
+        const dd = String(d.getDate()).padStart(2, '0');
+        return `${y}-${m}-${dd}`;
+      }
+      function fmtHour(h) { return `${String(h).padStart(2, '0')}:00`; }
+      function fmtMonth(d) {
+        const y = d.getFullYear();
+        const m = String(d.getMonth() + 1).padStart(2, '0');
+        return `${y}-${m}`;
+      }
+
+      function groupDaily(timestamps) {
+        const map = new Map();
+        timestamps.forEach(ms => {
+          const d = new Date(ms);
+          const key = fmtDate(d);
+          map.set(key, (map.get(key) || 0) + 1);
+        });
+        return Array.from(map.entries()).sort((a,b) => a[0] < b[0] ? 1 : -1); // desc
+      }
+      function dailyMap(timestamps) {
+        const map = new Map();
+        timestamps.forEach(ms => {
+          const d = new Date(ms);
+          const key = fmtDate(d);
+          map.set(key, (map.get(key) || 0) + 1);
+        });
+        return map;
+      }
+      function groupHourlyForDate(timestamps, dateStr) {
+        const map = new Map(Array.from({length:24}, (_,i)=>[i,0]));
+        timestamps.forEach(ms => {
+          const d = new Date(ms);
+          if (fmtDate(d) === dateStr) {
+            map.set(d.getHours(), (map.get(d.getHours()) || 0) + 1);
+          }
+        });
+        return Array.from(map.entries()).sort((a,b)=>a[0]-b[0]);
+      }
+
+      function sumInRange(timestamps, fromMs) {
+        return timestamps.filter(ms => ms >= fromMs).length;
+      }
+
+      function renderBars(container, rows, labelFormatter) {
+        container.innerHTML = '';
+        const max = Math.max(1, ...rows.map(r => r[1]));
+        rows.forEach(([label, count]) => {
+          const line = document.createElement('div');
+          line.className = 'grid grid-cols-[120px_1fr_auto] items-center gap-3';
+          const ratio = count / max;
+          const fill = (ratio * 100).toFixed(2);
+          const opacity = (0.25 + 0.55 * ratio).toFixed(2); // 色濃さ
+          const glow = (0.15 + 0.45 * ratio).toFixed(2);    // 発光強さ
+          const blur = Math.round(6 + 10 * ratio);          // 発光サイズ
+          line.innerHTML = `
+            <div class="text-xs text-slate-400">${labelFormatter ? labelFormatter(label) : label}</div>
+            <div class="bar bg-secondary/20 relative">
+              <div
+                class="absolute inset-y-0 left-0 rounded-full"
+                style="
+                  width:${fill}%;
+                  background: rgba(0,240,255,${opacity});
+                  box-shadow: 0 0 ${blur}px rgba(0,240,255,${glow});
+                "
+                title="${labelFormatter ? labelFormatter(label) : label}: ${count}"
+              ></div>
+            </div>
+            <div class="text-sm font-bold tabular-nums">${count}</div>
+          `;
+          container.appendChild(line);
+        });
+      }
+      function renderDailyForDate(container, dateStr, countsMap) {
+        const count = countsMap.get(dateStr) || 0;
+        renderBars(container, [[dateStr, count]], (s) => s);
+      }
+
+      function buildCalendarCells(monthDate) {
+        const y = monthDate.getFullYear();
+        const m = monthDate.getMonth(); // 0-11
+        const first = new Date(y, m, 1);
+        const startDay = first.getDay(); // 0:Sun
+        const daysInMonth = new Date(y, m + 1, 0).getDate();
+        const prevDays = new Date(y, m, 0).getDate();
+        const cells = [];
+        // preceding days
+        for (let i = startDay - 1; i >= 0; i--) {
+          const d = new Date(y, m - 1, prevDays - i);
+          cells.push({ date: d, inMonth: false });
+        }
+        // current month days
+        for (let d = 1; d <= daysInMonth; d++) {
+          cells.push({ date: new Date(y, m, d), inMonth: true });
+        }
+        // trailing to complete 6 rows (42 cells)
+        const total = 42;
+        let next = 1;
+        while (cells.length < total) {
+          cells.push({ date: new Date(y, m + 1, next++), inMonth: false });
+        }
+        return cells;
+      }
+
+      function renderCalendar(gridEl, monthLabelEl, monthDate, countsMap, selectedDateStr) {
+        monthLabelEl.textContent = fmtMonth(monthDate);
+        gridEl.innerHTML = '';
+        const todayStr = fmtDate(new Date());
+        const cells = buildCalendarCells(monthDate);
+        cells.forEach(({date, inMonth}) => {
+          const ds = fmtDate(date);
+          const count = countsMap.get(ds) || 0;
+          const el = document.createElement('button');
+          el.className = [
+            'text-left p-2 rounded-lg border transition-colors',
+            inMonth ? 'border-white/10 bg-black/20 hover:bg-white/5' : 'border-white/5 bg-black/10 text-slate-500',
+            ds === todayStr ? 'ring-1 ring-secondary/60' : '',
+            ds === selectedDateStr ? 'border-secondary/50 bg-secondary/10' : ''
+          ].join(' ');
+          el.dataset.date = ds;
+          el.innerHTML = `
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold">${date.getDate()}</span>
+              ${count ? `<span class="text-[10px] px-1.5 py-0.5 rounded-full bg-secondary/20 text-secondary font-bold">${count}</span>` : ''}
+            </div>
+          `;
+          gridEl.appendChild(el);
+        });
+      }
+
+      function init() {
+        const events = getEvents();
+        const total = Number(localStorage.getItem('estimatePressCount') || '0');
+
+        // summary
+        document.getElementById('total').textContent = String(total || events.length);
+        const now = new Date();
+        const startToday = new Date(fmtDate(now) + 'T00:00:00').getTime();
+        const start7 = Date.now() - 7*24*60*60*1000;
+        const start30 = Date.now() - 30*24*60*60*1000;
+        document.getElementById('today').textContent = String(sumInRange(events, startToday));
+        document.getElementById('week').textContent = String(sumInRange(events, start7));
+        document.getElementById('month').textContent = String(sumInRange(events, start30));
+
+        // calendar + hourly + daily(selected)
+        const dailyContainer = document.getElementById('dailyContainer');
+        const countsMap = dailyMap(events);
+        let selectedDateStr = fmtDate(now);
+        let monthDate = new Date(now.getFullYear(), now.getMonth(), 1);
+        const gridEl = document.getElementById('calendarGrid');
+        const monthLabelEl = document.getElementById('monthLabel');
+        const hourlyContainer = document.getElementById('hourlyContainer');
+        const dayLabelEl = document.getElementById('dayLabel');
+
+        function renderHourly() {
+          const rows = groupHourlyForDate(getEvents(), selectedDateStr);
+          renderBars(hourlyContainer, rows, (h) => fmtHour(h));
+          dayLabelEl.textContent = selectedDateStr;
+        }
+
+        renderCalendar(gridEl, monthLabelEl, monthDate, countsMap, selectedDateStr);
+        renderDailyForDate(dailyContainer, selectedDateStr, countsMap);
+        renderHourly();
+
+        gridEl.addEventListener('click', (e) => {
+          const t = e.target;
+          // Safariや一部環境でTextノード等が来る場合に備えて安全にclosestを呼ぶ
+          if (!(t instanceof Element)) return;
+          const btn = t.closest('button');
+          if (!btn) return;
+          const ds = btn.getAttribute('data-date');
+          if (!ds) return;
+          selectedDateStr = ds;
+          renderCalendar(gridEl, monthLabelEl, monthDate, dailyMap(getEvents()), selectedDateStr);
+          renderDailyForDate(dailyContainer, selectedDateStr, dailyMap(getEvents()));
+          renderHourly();
+        });
+
+        document.getElementById('prevMonth').addEventListener('click', () => {
+          monthDate = new Date(monthDate.getFullYear(), monthDate.getMonth() - 1, 1);
+          renderCalendar(gridEl, monthLabelEl, monthDate, dailyMap(getEvents()), selectedDateStr);
+        });
+        document.getElementById('nextMonth').addEventListener('click', () => {
+          monthDate = new Date(monthDate.getFullYear(), monthDate.getMonth() + 1, 1);
+          renderCalendar(gridEl, monthLabelEl, monthDate, dailyMap(getEvents()), selectedDateStr);
+        });
+
+        document.getElementById('prevDay').addEventListener('click', () => {
+          const d = new Date(selectedDateStr + 'T00:00:00');
+          d.setDate(d.getDate() - 1);
+          selectedDateStr = fmtDate(d);
+          monthDate = new Date(d.getFullYear(), d.getMonth(), 1);
+          renderCalendar(gridEl, monthLabelEl, monthDate, dailyMap(getEvents()), selectedDateStr);
+          renderDailyForDate(dailyContainer, selectedDateStr, dailyMap(getEvents()));
+          renderHourly();
+        });
+        document.getElementById('nextDay').addEventListener('click', () => {
+          const d = new Date(selectedDateStr + 'T00:00:00');
+          d.setDate(d.getDate() + 1);
+          selectedDateStr = fmtDate(d);
+          monthDate = new Date(d.getFullYear(), d.getMonth(), 1);
+          renderCalendar(gridEl, monthLabelEl, monthDate, dailyMap(getEvents()), selectedDateStr);
+          renderDailyForDate(dailyContainer, selectedDateStr, dailyMap(getEvents()));
+          renderHourly();
+        });
+
+        document.getElementById('btnClear').addEventListener('click', () => {
+          if (!confirm('このブラウザに保存された統計データを削除します。よろしいですか？')) return;
+          localStorage.removeItem('estimatePressEvents');
+          localStorage.removeItem('estimatePressCount');
+          init();
+        });
+      }
+      init();
+    </script>
+  </body>
+</html>
+
+
