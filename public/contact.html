@@ -172,6 +172,14 @@
           <p id="formMsg" class="text-xs text-slate-700 mt-2"></p>
           <p class="text-xs text-slate-700 mt-1">メールアプリが開かない場合は <a href="mailto:support@genbaboxx.co.jp" class="text-primary underline">support@genbaboxx.co.jp</a> 宛に直接お送りください。</p>
         </form>
+        <!-- Thanks modal -->
+        <div id="thanksModal" class="fixed inset-0 z-[60] hidden items-center justify-center bg-black/70">
+          <div class="mx-4 max-w-md w-full bg-white text-slate-900 rounded-2xl p-8 shadow-xl text-center">
+            <h2 class="text-2xl font-extrabold mb-2">お問い合わせありがとうございました！</h2>
+            <p class="text-slate-600 mb-6">担当者より折り返しご連絡いたします。しばらくお待ちください。</p>
+            <button id="thanksCloseBtn" class="w-full bg-slate-900 text-white font-bold py-3 rounded-lg hover:bg-slate-800 focus:outline-none focus:ring-4 focus:ring-slate-700/50">閉じる</button>
+          </div>
+        </div>
       </div>
     </main>
 
@@ -180,6 +188,21 @@
       const form = document.getElementById('contactForm');
       const formMsg = document.getElementById('formMsg');
       const submitBtn = document.getElementById('submitBtn');
+      const thanksModal = document.getElementById('thanksModal');
+      const thanksCloseBtn = document.getElementById('thanksCloseBtn');
+      function openThanksModal(){
+        if (!thanksModal) return;
+        thanksModal.classList.remove('hidden');
+        thanksModal.classList.add('flex');
+      }
+      function closeThanksModal(){
+        if (!thanksModal) return;
+        thanksModal.classList.add('hidden');
+        thanksModal.classList.remove('flex');
+      }
+      thanksCloseBtn?.addEventListener('click', closeThanksModal);
+      thanksModal?.addEventListener('click', (e) => { if (e.target === thanksModal) closeThanksModal(); });
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeThanksModal(); });
       
       
       // desired の選択を hidden の topic に同期
@@ -223,8 +246,8 @@
             body: JSON.stringify(payload)
           });
           if (res.ok) {
-            formMsg.textContent = '送信しました。担当者より折り返しご連絡いたします。';
             form.reset();
+            openThanksModal();
             submitBtn.disabled = false;
             submitBtn.classList.remove('opacity-70','cursor-not-allowed');
             return;
