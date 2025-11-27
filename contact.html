@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>お問い合わせ | BAKUSOQ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['"Noto Sans JP"', '"Inter"', 'sans-serif'],
+            },
+            colors: {
+              background: '#050B14',
+              surface: '#0F172A',
+              primary: '#00A3FF',
+              secondary: '#00F0FF',
+            },
+            boxShadow: {
+              'neon': '0 0 20px rgba(0, 240, 255, 0.3)',
+              'neon-strong': '0 0 30px rgba(0, 240, 255, 0.5)',
+            },
+          }
+        }
+      }
+    </script>
+    <style>
+      body { background-color:#050B14; color:#F8FAFC; }
+      .glass-card {
+        background: rgba(15, 23, 42, 0.6);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+    </style>
+  </head>
+  <body class="min-h-screen font-sans">
+    <div class="fixed inset-0 -z-10 pointer-events-none">
+      <div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-primary/20 rounded-full blur-[120px] mix-blend-screen opacity-40"></div>
+      <div class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-secondary/10 rounded-full blur-[120px] mix-blend-screen opacity-30"></div>
+    </div>
+
+    <header class="sticky top-0 z-50 bg-[#050B14]/80 backdrop-blur-md border-b border-white/10">
+      <div class="container mx-auto px-4 h-16 flex items-center justify-between">
+        <a href="/" class="text-2xl font-black italic">BAKUSOQ</a>
+        <a href="/" class="text-sm text-slate-400 hover:text-white">戻る</a>
+      </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-12">
+      <div class="max-w-5xl mx-auto glass-card rounded-2xl p-8 shadow-2xl shadow-black/40">
+        <h1 class="text-3xl font-black mb-2">お問い合わせ</h1>
+        <p class="text-slate-400 mb-8">以下のフォームにご入力ください。送信後、お使いのメールアプリが起動します。</p>
+
+        <!-- Toggle -->
+        <div class="mb-6 inline-flex rounded-full border border-white/10 overflow-hidden">
+          <button id="btnGForm" class="px-4 py-2 text-sm font-bold bg-white/10 text-white">Googleフォーム</button>
+          <button id="btnNative" class="px-4 py-2 text-sm font-bold text-slate-300 hover:text-white">サイト内フォーム</button>
+        </div>
+
+        <!-- Google Form (default) -->
+        <div id="gfWrap" class="rounded-2xl overflow-hidden border border-white/10 bg-black/20">
+          <iframe
+            src="https://forms.gle/8D9hjGUhXeYyTLUc6"
+            class="w-full"
+            style="height: 1200px;"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+
+        <!-- Native form (fallback / alternative) -->
+        <form id="contactForm" class="space-y-5 hidden">
+          <div>
+            <label class="block text-sm text-white mb-1">会社名 <span class="text-xs align-middle">（必須）</span></label>
+            <input type="text" name="company" required class="w-full p-3 bg-black/20 border border-white/10 rounded-lg text-white outline-none focus:ring-1 focus:ring-secondary" />
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm text-white mb-1">お名前 <span class="text-xs align-middle">（必須）</span></label>
+              <input type="text" name="name" required class="w-full p-3 bg-black/20 border border-white/10 rounded-lg text-white outline-none focus:ring-1 focus:ring-secondary" />
+            </div>
+            <div>
+              <label class="block text-sm text-white mb-1">メールアドレス <span class="text-xs align-middle">（任意）</span></label>
+              <input type="email" name="email" class="w-full p-3 bg-black/20 border border-white/10 rounded-lg text-white outline-none focus:ring-1 focus:ring-secondary" />
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm text-white mb-1">電話番号 <span class="text-xs align-middle">（必須）</span></label>
+              <input type="tel" name="phone" required class="w-full p-3 bg-black/20 border border-white/10 rounded-lg text-white outline-none focus:ring-1 focus:ring-secondary" />
+            </div>
+            <div>
+              <label class="block text-sm text-white mb-1">ご用件 <span class="text-xs align-middle">（必須）</span></label>
+              <select name="topic" required class="w-full p-3 bg-black/20 border border-white/10 rounded-lg text-white outline-none focus:ring-1 focus:ring-secondary">
+                <option value="デモ依頼">デモ依頼</option>
+                <option value="資料請求">資料請求</option>
+                <option value="料金・導入相談">料金・導入相談</option>
+                <option value="その他">その他</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label class="block text-sm text-white mb-1">内容 <span class="text-xs align-middle">（任意）</span></label>
+            <textarea name="message" rows="5" class="w-full p-3 bg-black/20 border border-white/10 rounded-lg text-white outline-none focus:ring-1 focus:ring-secondary" placeholder="できるだけ詳細にご記入ください。"></textarea>
+          </div>
+          <button id="submitBtn" type="submit" class="w-full bg-neon-gradient text-background font-black py-3 rounded-none skew-x-[-10deg] shadow-neon hover:shadow-neon-strong transition">
+            <span class="skew-x-[10deg] text-white">送信する（メールアプリが開きます）</span>
+          </button>
+          <p id="formMsg" class="text-xs text-white mt-2"></p>
+          <p class="text-xs text-white mt-1">メールアプリが開かない場合は <a href="mailto:support@genbaboxx.co.jp" class="text-secondary underline">support@genbaboxx.co.jp</a> 宛に直接お送りください。</p>
+        </form>
+      </div>
+    </main>
+
+    <script>
+      function encode(val){ return encodeURIComponent(val).replace(/%20/g,'+'); }
+      const form = document.getElementById('contactForm');
+      const formMsg = document.getElementById('formMsg');
+      const submitBtn = document.getElementById('submitBtn');
+      const gfWrap = document.getElementById('gfWrap');
+      const btnGForm = document.getElementById('btnGForm');
+      const btnNative = document.getElementById('btnNative');
+      // Toggle behavior
+      btnGForm?.addEventListener('click', (e) => {
+        e.preventDefault();
+        gfWrap.classList.remove('hidden');
+        form.classList.add('hidden');
+        btnGForm.classList.add('bg-white/10','text-white');
+        btnNative.classList.remove('bg-white/10','text-white');
+        btnNative.classList.add('text-slate-300');
+      });
+      btnNative?.addEventListener('click', (e) => {
+        e.preventDefault();
+        gfWrap.classList.add('hidden');
+        form.classList.remove('hidden');
+        btnNative.classList.add('bg-white/10','text-white');
+        btnGForm.classList.remove('bg-white/10','text-white');
+        btnGForm.classList.add('text-slate-300');
+      });
+      
+      form.addEventListener('submit', async function(e){
+        e.preventDefault();
+        formMsg.textContent = '';
+        submitBtn.disabled = true;
+        submitBtn.classList.add('opacity-70','cursor-not-allowed');
+
+        const fd = new FormData(this);
+        const to = 'support@genbaboxx.co.jp';
+        const subject = `[お問い合わせ] ${fd.get('topic') || ''} - ${fd.get('company') || ''} ${fd.get('name') || ''}`;
+
+        // 1) Try serverless email (FormSubmit). First-time only,要ワンクリック認証。
+        try {
+          const payload = {
+            _subject: subject,
+            _replyto: fd.get('email') || '',
+            company: fd.get('company') || '',
+            name: fd.get('name') || '',
+            email: fd.get('email') || '',
+            phone: fd.get('phone') || '',
+            topic: fd.get('topic') || '',
+            message: fd.get('message') || ''
+          };
+          const res = await fetch('https://formsubmit.co/ajax/support@genbaboxx.co.jp', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          if (res.ok) {
+            formMsg.textContent = '送信しました。担当者より折り返しご連絡いたします。';
+            form.reset();
+            submitBtn.disabled = false;
+            submitBtn.classList.remove('opacity-70','cursor-not-allowed');
+            return;
+          }
+          throw new Error('FormSubmit error');
+        } catch (err) {
+          // 2) Fallback to mailto
+          const body = [
+            '【会社名】', fd.get('company') || '',
+            '\n【お名前】', fd.get('name') || '',
+            '\n【メール】', fd.get('email') || '',
+            '\n【電話】', fd.get('phone') || '',
+            '\n【ご用件】', fd.get('topic') || '',
+            '\n\n【内容】\n', fd.get('message') || ''
+          ].join(' ');
+          window.location.href = `mailto:${to}?subject=${encode(subject)}&body=${encode(body)}`;
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.classList.remove('opacity-70','cursor-not-allowed');
+        }
+      });
+    </script>
+  </body>
+</html>
+
+

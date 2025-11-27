@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BAKUSOQ | バクソク解体見積もりシステム</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['"Noto Sans JP"', '"Inter"', 'sans-serif'],
+            },
+            colors: {
+              background: '#050B14',
+              surface: '#0F172A',
+              primary: '#00A3FF',
+              secondary: '#00F0FF',
+              accent: '#2563EB',
+            },
+            backgroundImage: {
+              'hero-glow': 'radial-gradient(circle at center, rgba(0, 240, 255, 0.15) 0%, rgba(5, 11, 20, 0) 70%)',
+              'card-gradient': 'linear-gradient(145deg, rgba(15, 23, 42, 0.6) 0%, rgba(15, 23, 42, 0.3) 100%)',
+              'neon-gradient': 'linear-gradient(90deg, #00C6FF 0%, #0072FF 100%)',
+            },
+            boxShadow: {
+              'neon': '0 0 20px rgba(0, 240, 255, 0.3)',
+              'neon-strong': '0 0 30px rgba(0, 240, 255, 0.5)',
+            },
+            animation: {
+              'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'slide-up': 'slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+              'float': 'float 6s ease-in-out infinite',
+            },
+            keyframes: {
+              slideUp: {
+                '0%': { transform: 'translateY(40px)', opacity: '0' },
+                '100%': { transform: 'translateY(0)', opacity: '1' },
+              },
+              float: {
+                '0%, 100%': { transform: 'translateY(0)' },
+                '50%': { transform: 'translateY(-20px)' },
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      body {
+        font-family: 'Noto Sans JP', 'Inter', sans-serif;
+        background-color: #050B14;
+        color: #F8FAFC;
+        overflow-x: hidden;
+      }
+      
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #050B14;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #1e293b;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #334155;
+      }
+
+      .text-glow {
+        text-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+      }
+      
+      .glass-card {
+        background: rgba(15, 23, 42, 0.6);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      
+      /* 一閃のアニメーション */
+      @keyframes streak-move {
+        0%   { transform: translateX(-20vw); opacity: 0; }
+        10%  { opacity: 1; }
+        90%  { opacity: 1; }
+        100% { transform: translateX(120vw); opacity: 0; }
+      }
+      /* 画面左端→右端までフルに走る */
+      @keyframes streak-run-edge {
+        0%   { transform: translateX(-110vw); opacity: 0; }
+        10%  { opacity: 1; }
+        90%  { opacity: 1; }
+        100% { transform: translateX(110vw); opacity: 0; }
+      }
+      @keyframes streak-flash {
+        0%   { opacity: 0; }
+        12%  { opacity: 1; }
+        70%  { opacity: 1; }
+        100% { opacity: 0.1; }
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.554.0",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
