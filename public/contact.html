@@ -69,7 +69,7 @@
             src="https://forms.gle/8D9hjGUhXeYyTLUc6"
             id="gformFrame"
             class="w-full"
-            style="height: 1600px;"
+            style="height: 2800px;"
             scrolling="no"
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"
@@ -133,9 +133,9 @@
       function setGFormHeight(){
         if(!gformFrame) return;
         const w = window.innerWidth || document.documentElement.clientWidth;
-        let h = 1600;          // desktop default
-        if (w < 640) h = 2400; // mobile
-        else if (w < 1024) h = 2000; // tablet
+        let h = 2800;            // desktop default (generous)
+        if (w < 640) h = 4200;   // mobile: tallest to avoid inner scroll
+        else if (w < 1024) h = 3400; // tablet
         gformFrame.style.height = h + 'px';
       }
       setGFormHeight();
