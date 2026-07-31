@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { DemoWidget } from './components/DemoWidget';
 import { Features } from './components/Features';
-import { Zap, Menu, ChevronRight, X, Mail, Phone, Globe } from 'lucide-react';
+import { Zap, Menu, ChevronRight, X, Mail, Phone, Globe, Building2, MapPin } from 'lucide-react';
 import LightningStreak from './components/LightningStreak';
 
 const App: React.FC = () => {
@@ -272,6 +272,14 @@ const App: React.FC = () => {
                     <h4 className="text-white font-bold mb-6">Contact</h4>
                     <div className="space-y-4 text-sm text-slate-500">
                         <div className="flex items-center gap-3">
+                            <Building2 size={16} className="text-secondary"/>
+                            <span>株式会社GENBABOXX</span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                            <MapPin size={16} className="text-secondary"/>
+                            <span>東京都新宿区天神11-7</span>
+                        </div>
+                        <div className="flex items-center gap-3">
                             <Mail size={16} className="text-secondary"/>
                             <span>support@genbaboxx.co.jp</span>
                         </div>
@@ -291,7 +299,7 @@ const App: React.FC = () => {
                     &copy; 2025 BAKUSOQ Inc. All rights reserved.
                 </div>
                 <div className="flex gap-6 text-xs text-slate-600">
-                    <a href="#" className="hover:text-white">プライバシーポリシー</a>
+                    <a href="/privacy.html" className="hover:text-white">プライバシーポリシー</a>
                     <a href="#" className="hover:text-white">特定商取引法に基づく表記</a>
                 </div>
             </div>
