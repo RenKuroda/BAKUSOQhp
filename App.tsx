@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { DemoWidget } from './components/DemoWidget';
 import { Features } from './components/Features';
-import { Zap, Menu, ChevronRight, X, Mail, Phone, Globe, Building2, MapPin } from 'lucide-react';
+import { Zap, Menu, ChevronRight, X, Mail, Phone, Building2, MapPin, MessageCircle } from 'lucide-react';
 import LightningStreak from './components/LightningStreak';
+
+const LINE_OFFICIAL_URL = 'https://s.lmes.jp/landing-qr/2010915857-YplNUAiU?uLand=0tRxrL';
 
 const App: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -59,7 +61,18 @@ const App: React.FC = () => {
             ))}
           </nav>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
+            <a
+              href={LINE_OFFICIAL_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden md:flex bg-[#06C755] hover:bg-[#05b34c] text-white text-sm font-black px-5 py-2.5 rounded-none skew-x-[-10deg] transition-all duration-300 shadow-[0_0_15px_rgba(6,199,85,0.35)] hover:shadow-[0_0_20px_rgba(6,199,85,0.55)] items-center gap-2"
+            >
+              <span className="skew-x-[10deg] inline-flex items-center gap-1.5">
+                <MessageCircle size={15} />
+                LINE
+              </span>
+            </a>
             <a href="/contact.html" className="hidden md:flex bg-white text-background hover:bg-secondary hover:text-background text-sm font-black px-6 py-2.5 rounded-none skew-x-[-10deg] transition-all duration-300 shadow-[0_0_15px_rgba(255,255,255,0.3)] hover:shadow-[0_0_20px_rgba(0,240,255,0.6)] items-center gap-2 group">
               <span className="skew-x-[10deg] inline-block">お問い合わせ</span>
               <ChevronRight size={16} className="skew-x-[10deg] group-hover:translate-x-1 transition-transform" />
@@ -82,6 +95,16 @@ const App: React.FC = () => {
               {item}
             </a>
           ))}
+              <a
+                href={LINE_OFFICIAL_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setMobileMenuOpen(false)}
+                className="w-full bg-[#06C755] text-white font-black py-4 text-lg text-center inline-flex items-center justify-center gap-2"
+              >
+                <MessageCircle size={20} />
+                LINE友だち追加
+              </a>
               <a href="/contact.html" onClick={() => setMobileMenuOpen(false)} className="w-full bg-secondary text-background font-black py-4 text-lg text-center">
                 お問い合わせ
               </a>
@@ -249,6 +272,50 @@ const App: React.FC = () => {
             </div>
         </section>
 
+        {/* LINE Official Account */}
+        <section id="line" className="py-20 relative overflow-hidden border-t border-white/5">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#06C755]/10 via-transparent to-transparent z-0"></div>
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="max-w-3xl mx-auto glass-card rounded-2xl border border-white/10 p-8 md:p-12">
+              <div className="flex flex-col md:flex-row items-center gap-10">
+                <div className="shrink-0 bg-white p-4 rounded-2xl shadow-[0_0_30px_rgba(6,199,85,0.25)]">
+                  <img
+                    src="/line-qr.png"
+                    alt="BAKUSOQ LINE公式アカウント QRコード"
+                    width={200}
+                    height={200}
+                    className="w-44 h-44 md:w-48 md:h-48"
+                  />
+                </div>
+                <div className="text-center md:text-left flex-1">
+                  <div className="text-[#06C755] font-bold tracking-[0.2em] uppercase text-xs mb-3">LINE公式アカウント</div>
+                  <h2 className="text-2xl md:text-3xl font-black text-white mb-3 tracking-tight">
+                    BAKUSOQの最新情報を<br className="md:hidden" />LINEで受け取る
+                  </h2>
+                  <p className="text-slate-400 text-sm md:text-base leading-relaxed mb-8">
+                    スマホでQRコードを読み込むか、下のボタンから友だち追加。<br className="hidden md:block" />
+                    プロダクト情報・アップデート・お知らせをお届けします。
+                  </p>
+                  <a
+                    href={LINE_OFFICIAL_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2 bg-[#06C755] hover:bg-[#05b34c] text-white font-black px-8 py-4 rounded-none skew-x-[-10deg] shadow-[0_0_20px_rgba(6,199,85,0.35)] transition-all"
+                  >
+                    <span className="skew-x-[10deg] inline-flex items-center gap-2">
+                      <MessageCircle size={18} />
+                      友だち追加する
+                    </span>
+                  </a>
+                  <p className="text-xs text-slate-600 mt-4">
+                    QRコードをスキャンするには LINEアプリのコードリーダーをご利用ください。
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
       </main>
 
       {/* Footer */}
@@ -257,7 +324,7 @@ const App: React.FC = () => {
         <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-secondary/50 to-transparent"></div>
         
         <div className="container mx-auto px-4">
-            <div className="grid md:grid-cols-2 gap-12 mb-12">
+            <div className="grid md:grid-cols-3 gap-12 mb-12">
                 <div className="md:col-span-1">
                     <div className="flex items-center gap-2 mb-6">
                         <Zap size={24} className="text-secondary" fill="currentColor" />
@@ -291,6 +358,21 @@ const App: React.FC = () => {
                             平日 9:00〜18:00
                         </div>
                     </div>
+                </div>
+                <div>
+                    <h4 className="text-white font-bold mb-6">LINE</h4>
+                    <p className="text-sm text-slate-500 mb-4 leading-relaxed">
+                        公式アカウントで最新情報・お知らせを配信中。
+                    </p>
+                    <a
+                      href={LINE_OFFICIAL_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-sm font-bold text-[#06C755] hover:text-[#2ee06f] transition-colors"
+                    >
+                      <MessageCircle size={16} />
+                      友だち追加する
+                    </a>
                 </div>
             </div>
             
