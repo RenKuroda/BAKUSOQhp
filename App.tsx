@@ -344,7 +344,7 @@ const App: React.FC = () => {
                         </div>
                         <div className="flex items-center gap-3">
                             <MapPin size={16} className="text-secondary"/>
-                            <span>東京都新宿区天神11-7</span>
+                            <span>東京都新宿区天神7-11</span>
                         </div>
                         <div className="flex items-center gap-3">
                             <Mail size={16} className="text-secondary"/>
